@@ -1,32 +1,63 @@
-# Desafio DevOps jr PicPay
+#  Desafio DevOps jr PicPay
 
-Obrigado pelo interesse em fazer parte do nosso time! Preparamos este desafio com carinho para ajudar a entender um pouco mais dos seus conhecimentos na área de DevOps/SRE
+## Visão Geral
 
-Se não entender algum conceito ou parte do problema, não é motivo para se preocupar! Queremos que faça o desafio até onde souber.
+Este projeto consiste em três serviços: um serviço de escrita (Python), um serviço de leitura (Go) e um serviço de frontend (JavaScript). Os serviços são orquestrados usando Docker Compose. Abaixo estão as mudanças recentes feitas em cada serviço e na configuração geral do Docker Compose.
 
-No mais, divirta-se :D
+## Serviço de Escrita (Python)
 
-## Conteúdo do repositório
-Na pasta `services` deste repositório existem 3 aplicações, um frontend que se comunica com um backend go e um em python, e estes se comunicam com um Redis para troca de informações. Tudo isso é orquestrado pelo docker-compose na raiz do repositório.
+### Alterações:
+1. **Criação do `requirements.txt`**:
+    - Adiciona a biblioteca `redis` que estava faltando.
 
-As aplicações contém falhas propositais, de código, projeto, imagem docker, etc. Embora cada aplicação funcione individualmente, o conjunto não sobe...
+2. **Atualização do `Dockerfile`**:
+    - Adição do comando para instalar as dependências.
+    - Modificado o comando `CMD` para garantir a execução correta.
 
-## O que deve ser feito?
+## Serviço de Leitura (Go)
 
-Faça um fork deste repositório e envie uma pull request contendo:
-- ajustes que fazem todas as aplicações subirem e se comunicarem
-- um README contendo os seus pensamentos ao longo do projeto
-- um desenho contendo os serviços que explique o funcionamento
+### Alterações:
+1. **Criação do `go.mod`**:
+    - Adicionado para gerenciar as dependências do Go.
 
-Faça commits ao longo do processo, queremos entender o seu modo de pensar! :)
+2. **Reescrita do `Dockerfile`**:
+    - Modificado para copiar o `go.mod`.
+    - Instalar as dependências.
+    - Expor a porta e executar o programa.
 
-Para a entrevista, separe também anotações contendo melhorias que faria em cada aplicação e o motivo. Não envie estas anotações na pull request.
+3. **Atualização do `main.go`**:
+    - Alterados os argumentos para a função `client.Get`.
 
-## Bibliografia recomendada
-https://docs.docker.com/engine/reference/builder/
+## Serviço de Frontend (JavaScript)
 
-https://docs.docker.com/compose/compose-file/
+### Alterações:
+1. **Atualização do `Dockerfile`**:
+    - Mudança da porta de `5000` para `3000`.
+    - Removidas as aspas do comando `serve` na linha `CMD`.
 
-https://12factor.net/
+## Docker Compose
 
-https://conventionalcommits.org/
+### Alterações:
+1. **Porta do Frontend**:
+    - Mudança de `5000` para `3000`.
+2. **Correção de Typo**:
+    - Corrigido `reids` para `redis`.
+3. **Adição de Rede**:
+    - Adicionada a configuração de rede que estava faltando.
+
+## Como Executar
+
+Para executar o projeto, use Docker Compose:
+```bash
+docker-compose up --build
+```
+
+## Diagrama do Projeto
+![Diagrama](diagrama.png)
+
+## Nota
+
+O desafio deste projeto foi o serviço de leitura, pois eu não conhecia a linguagem Go. Tive que estudá-la para entender o que estava errado e fazer as alterações necessárias.
+
+## Link para o Repositorio do Desafio
+[Repositorio](https://github.com/PicPay/picpay-jr-devops-challenge)
